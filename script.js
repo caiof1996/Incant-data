@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const whatsappInput = document.getElementById('whatsapp');
     const estadoSelect = document.getElementById('estado');
     const cidadeSelect = document.getElementById('cidade');
+    const aniversarioInput = document.getElementById('aniversario'); // Novo: Referência ao input de aniversário
     const bairroInput = document.getElementById('bairro');
     const addButton = document.getElementById('add-btn');
     const generateButton = document.getElementById('generate-btn'); // Corrigido o ID aqui
@@ -110,15 +111,25 @@ document.addEventListener('DOMContentLoaded', () => {
         const estadoSigla = estadoSelect.value;
         const cidade = cidadeSelect.value;
         const bairro = bairroInput.value.trim();
+        const aniversario = aniversarioInput.value; // Valor do input (formato YYYY-MM-DD)
+
+        let formattedAniversario = '';
+        if (aniversario) {
+            // Extrai dia e mês e formata para DD/MM
+            const dateParts = aniversario.split('-'); // [YYYY, MM, DD]
+            if (dateParts.length === 3) {
+                formattedAniversario = `${dateParts[2]}/${dateParts[1]}`; // DD/MM
+            }
+        }
 
         // Valida se todos os campos obrigatórios foram preenchidos
-        if (!nome || !whatsapp || !estadoSigla || !cidade || !bairro) {
-            alert('Por favor, preencha todos os pergaminhos (campos).');
+        if (!nome || !whatsapp || !estadoSigla || !cidade || !bairro) { // Aniversário é opcional
+            alert('Por favor, preencha todos os pergaminhos (campos obrigatórios: Nome, Contato, Estado, Cidade, Bairro).');
             return;
         }
 
         // Cria um objeto pessoa com os dados coletados
-        const pessoa = { nome, whatsapp, estado: estado, cidade, bairro }; // Inclui o nome do estado
+        const pessoa = { nome, whatsapp, estado: estado, cidade, bairro, aniversario: formattedAniversario }; // Inclui o nome do estado e o aniversário formatado
         // Adiciona a pessoa ao array de pessoas
         pessoas.push(pessoa);
 
@@ -129,6 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
         nomeInput.value = '';
         whatsappInput.value = '';
         bairroInput.value = '';
+        aniversarioInput.value = ''; // Limpa o campo de aniversário
         nomeInput.focus(); // Coloca o foco de volta no campo nome para facilitar a próxima entrada
         alert('Bruxo(a) registrado com sucesso no Grande Livro!');
         saveData(); // Salva os dados no localStorage
@@ -151,6 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td>${pessoa.estado}</td> <!-- Exibe o nome do estado -->
                 <td>${pessoa.cidade}</td>
                 <td>${pessoa.bairro}</td>
+                <td>${pessoa.aniversario}</td> <!-- Exibe o aniversário -->
             `;
             dataTableBody.appendChild(row);
         });
@@ -173,13 +186,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Prepara os dados para a planilha, incluindo o cabeçalho
         const sheetData = [
-            ["Nome do Bruxo(a)", "Contato", "Reino", "Cidade Mágica", "Comunidade/Bairro"] // Cabeçalho da planilha
+            ["Nome do Bruxo(a)", "Contato", "Reino", "Cidade Mágica", "Comunidade/Bairro", "Aniversário"] // Cabeçalho da planilha, com nova coluna
         ].concat(pessoas.map(p => [
             p.nome,
             p.whatsapp,
             p.estado,
             p.cidade,
-            p.bairro
+            p.bairro,
+            p.aniversario // Adiciona o aniversário à linha de dados
         ]));
 
         // Cria a "worksheet" (planilha) a partir do array de dados
