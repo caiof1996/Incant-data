@@ -190,6 +190,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Gera o arquivo Excel no formato .xlsx e força o download para o usuário
         XLSX.writeFile(workbook, 'pergaminho_incantori.xlsx');
+
+        // Limpa os dados após a geração do Excel
+        pessoas = []; // Esvazia o array de pessoas
+        saveData();   // Atualiza o localStorage com o array vazio
+        updateTable(); // Limpa a tabela na tela
+        alert('Pergaminho gerado e o Grande Livro foi reiniciado para novos registros!');
     }
 
     // --- Event Listeners ---
@@ -211,119 +217,3 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inicializa o seletor de cidades com uma mensagem padrão, indicando que o usuário deve selecionar um estado primeiro
     cidadeSelect.innerHTML = '<option value="">Selecione um estado primeiro</option>';
 });
-
-            const option = document.createElement('option');
-            option.value = cidade;
-            option.textContent = cidade;
-            cidadeSelect.appendChild(option);
-        
-        // Dispara a atualização dos bairros para a primeira cidade da lista
-        populateBairros();
-    
-
-    // Popula o seletor de bairros com base na cidade selecionada
-    function populateBairros() {
-        const selectedCity = cidadeSelect.value;
-        const bairros = cityBairroMap[selectedCity] || [];
-
-        // Limpa opções existentes
-        bairroSelect.innerHTML = '';
-        // Adiciona os bairros correspondentes
-        bairros.forEach(bairro => {
-            const option = document.createElement('option');
-            option.value = bairro;
-            option.textContent = bairro;
-            bairroSelect.appendChild(option);
-        });
-    }
-
-    // Adiciona uma nova pessoa à lista e atualiza a tabela
-    function addPessoa() {
-        const nome = nomeInput.value.trim();
-        const whatsapp = whatsappInput.value.trim();
-        const cidade = cidadeSelect.value;
-        const bairro = bairroSelect.value;
-
-        if (!nome || !whatsapp || !cidade || !bairro) {
-            alert('Por favor, preencha todos os campos.');
-            return;
-        }
-
-        const pessoa = { nome, whatsapp, cidade, bairro };
-        pessoas.push(pessoa);
-
-        updateTable();
-
-        // Limpa os campos de entrada
-        nomeInput.value = '';
-        whatsappInput.value = '';
-        nomeInput.focus(); // Coloca o foco de volta no campo nome
-        alert('Dados adicionados com sucesso!');
-    }
-
-    // Atualiza a tabela HTML com os dados do array 'pessoas'
-    function updateTable() {
-        // Limpa a tabela
-        dataTableBody.innerHTML = '';
-
-        // Adiciona cada pessoa como uma nova linha na tabela
-        pessoas.forEach(pessoa => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${pessoa.nome}</td>
-                <td>${pessoa.whatsapp}</td>
-                <td>${pessoa.cidade}</td>
-                <td>${pessoa.bairro}</td>
-            `;
-            dataTableBody.appendChild(row);
-        });
-    }
-
-    // Gera e baixa o arquivo Excel
-    function generateExcel() {
-        if (pessoas.length === 0) {
-            alert('Não há dados para gerar o arquivo Excel.');
-            return;
-        }
-
-        // Agrupa as pessoas por bairro
-        const pessoasByBairro = pessoas.reduce((acc, pessoa) => {
-            const bairro = pessoa.bairro;
-            if (!acc[bairro]) {
-                acc[bairro] = [];
-            }
-            acc[bairro].push(pessoa);
-            return acc;
-        }, {});
-
-        // Cria um novo workbook (arquivo Excel)
-        const workbook = XLSX.utils.book_new();
-
-        // Para cada bairro, cria uma nova aba (worksheet)
-        for (const bairro in pessoasByBairro) {
-            // Prepara os dados para a aba, começando com o cabeçalho
-            const sheetData = [
-                ["Nome", "Whatsapp", "Cidade"]
-            ];
-            // Adiciona os dados de cada pessoa
-            pessoasByBairro[bairro].forEach(p => {
-                sheetData.push([p.nome, p.whatsapp, p.cidade]);
-            });
-
-            // Cria a worksheet a partir do array de dados
-            const worksheet = XLSX.utils.aoa_to_sheet(sheetData);
-            // Adiciona a worksheet ao workbook, nomeando a aba com o nome do bairro
-            XLSX.utils.book_append_sheet(workbook, worksheet, bairro);
-        }
-
-        // Gera o arquivo e dispara o download
-        XLSX.writeFile(workbook, 'dados_coletados_por_bairro.xlsx');
-    }
-
-    // --- Event Listeners ---
-    cidadeSelect.addEventListener('change', populateBairros);
-    addButton.addEventListener('click', addPessoa);
-    generateButton.addEventListener('click', generateExcel);
-
-    // --- Inicialização ---
-    populateCities();
