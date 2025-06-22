@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
             p.estado,
             p.cidade,
             p.bairro,
-            p.aniversario // Adiciona o aniversário à linha de dados
+            p.aniversario
         ]));
 
         // Cria a "worksheet" (planilha) a partir do array de dados
