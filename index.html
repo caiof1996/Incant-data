@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Incantori - Livro de Registros</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Importando fontes mágicas do Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Incluindo a biblioteca SheetJS (xlsx.js) para gerar o Excel -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Incantori - Livro de Registros</h1>
+
+        <div class="form-container">
+            <h2>Identificação do Bruxo(a)</h2>
+            <div class="form-group">
+                <label for="nome">Nome do Bruxo(a):</label>
+                <input type="text" id="nome" placeholder="Digite o nome completo">
+            </div>
+            <div class="form-group">
+                <label for="whatsapp">Contato via Coruja (Whatsapp):</label>
+                <input type="text" id="whatsapp" placeholder="Seu número de contato">
+            </div>
+            <div class="form-group">
+                <label for="estado">Reino (UF):</label>
+                <select id="estado"></select>
+            </div>
+            <div class="form-group">
+                <label for="cidade">Cidade Mágica:</label>
+                <select id="cidade"></select>
+            </div>
+            <div class="form-group">
+                <label for="bairro">Comunidade / Bairro:</label>
+                <input type="text" id="bairro" placeholder="Digite sua comunidade ou bairro">
+            </div>
+            <div class="button-group">
+                <button id="add-btn">Registrar Bruxo(a)</button>
+                <button id="generate-btn">Gerar Pergaminho (Excel)</button>
+            </div>
+        </div>
+
+        <div class="data-display">
+            <h2>Registros Realizados</h2>
+            <table id="data-table">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Whatsapp</th>
+                        <th>Reino</th>
+                        <th>Cidade Mágica</th>
+                        <th>Bairro</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Os dados serão inseridos aqui via JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

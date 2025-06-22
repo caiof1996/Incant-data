@@ -1,0 +1,141 @@
+:root {
+    --background-color: #0c0c1d; /* Azul noite profundo */
+    --surface-color: #1a1a2e;    /* Azul escuro para o container */
+    --accent-color: #f0c420;      /* Dourado mágico */
+    --text-color: #e0e0e0;        /* Cinza claro para texto */
+    --header-color: #ffffff;      /* Branco para títulos principais */
+    --border-color: #536dfe55;    /* Azul claro para bordas com transparência */
+    --font-title: 'Cinzel', serif;
+    --font-body: 'Lato', sans-serif;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.container {
+    width: 100%;
+    max-width: 800px;
+    background-color: var(--surface-color);
+    padding: 30px;
+    border-radius: 8px; 
+    border: 1px solid var(--border-color);
+    box-shadow: 0 0 20px rgba(240, 196, 32, 0.2); /* Brilho dourado */
+}
+
+h1, h2 {
+    font-family: var(--font-title);
+    color: var(--header-color);
+    text-align: center;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+}
+
+h2 {
+    color: var(--accent-color);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.form-container {
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: #2f2f4f;
+    color: var(--text-color);
+    font-family: var(--font-body);
+}
+
+.button-group {
+    text-align: center;
+    margin-top: 20px;
+}
+
+button {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 0 10px;
+    transition: all 0.3s ease;
+    font-family: var(--font-title);
+    font-weight: 700;
+    color: var(--background-color);
+    text-transform: uppercase;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(240, 196, 32, 0.4);
+}
+
+#generate-btn {
+    background-color: transparent;
+    border: 2px solid var(--accent-color);
+    color: var(--accent-color);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid var(--border-color);
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #2f2f4f;
+    font-weight: 600;
+    font-family: var(--font-title);
+}
+
+/* Media query para telas menores que 768px (telas de celular) */
+@media (max-width: 768px) {
+    .container {
+        width: 95%; /* Ocupa 95% da largura da tela */
+        padding: 20px;
+        margin: 10px 0; /* Adiciona margem vertical */
+    }
+
+    .form-group input,
+    .form-group select {
+        padding: 12px; /* Aumenta o preenchimento para facilitar o toque */
+        font-size: 16px; /* Aumenta o tamanho da fonte para melhor legibilidade */
+    }
+
+    button {
+        width: 100%; /* Botões ocupam toda a largura */
+        margin: 10px 0; /* Adiciona margem vertical entre os botões */
+    }
+}
